@@ -26,11 +26,16 @@ const socketService = (io: Server) => {
           socket.to("some room").emit('message-receive', data);
         });
     
+
+        
         socket.on('sendMessage', async (data) => {
-    
-          
-          io.to("some room").emit('message-receive', data);
-        });
+          const messageWithDate = {
+              ...data,
+              date: new Date().toISOString()
+          };
+          io.to("some room").emit('message-receive', messageWithDate);
+      });
+      
       });
 };
 
